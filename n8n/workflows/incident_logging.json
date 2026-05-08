@@ -1,0 +1,44 @@
+{
+  "name": "PLC Incident Logging",
+  "nodes": [
+    {
+      "id": "webhook",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [0, 0],
+      "parameters": {
+        "path": "plc-incident",
+        "httpMethod": "POST",
+        "responseMode": "onReceived"
+      }
+    },
+    {
+      "id": "log",
+      "name": "Log Incident",
+      "type": "n8n-nodes-base.set",
+      "position": [240, 0],
+      "parameters": {
+        "values": {
+          "string": [
+            { "name": "status", "value": "logged" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "notify",
+      "name": "Send Notification",
+      "type": "n8n-nodes-base.noOp",
+      "position": [480, 0],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{ "node": "Log Incident", "type": "main", "index": 0 }]]
+    },
+    "Log Incident": {
+      "main": [[{ "node": "Send Notification", "type": "main", "index": 0 }]]
+    }
+  }
+}

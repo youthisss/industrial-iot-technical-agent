@@ -1,0 +1,4 @@
+source_dir: data/sample_manuals
+chunk_size: 800
+chunk_overlap: 100
+collection_name: plc_manuals

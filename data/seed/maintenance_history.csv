@@ -1,0 +1,3 @@
+machine_id,error_code,root_cause,solution_applied,success_status,downtime_minutes,technician_notes
+PLC-001,E-STOP,Emergency stop circuit not fully reset,Reset safety relay after verifying E-stop loop,true,18,Check safety relay indicator before restart
+PLC-002,OL-101,Motor overload after conveyor jam,Removed jam and reset overload relay,true,42,Inspect conveyor bearings during next PM

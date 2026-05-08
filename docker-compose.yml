@@ -1,0 +1,107 @@
+services:
+  ai-agent-service:
+    image: python:3.14-slim
+    container_name: ai-agent-service
+    env_file:
+      - .env
+    working_dir: /workspace/services/ai-agent-service
+    command: sh -c "pip install -r requirements.txt && uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/workspace
+    depends_on:
+      - postgres-db
+
+  api-gateway:
+    image: golang:1.26
+    container_name: api-gateway
+    env_file:
+      - .env
+    working_dir: /workspace/services/api-gateway
+    command: go run ./cmd/api
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/workspace
+    depends_on:
+      - ai-agent-service
+      - postgres-db
+      - redis-cache
+
+  telemetry-service:
+    image: golang:1.26
+    container_name: telemetry-service
+    env_file:
+      - .env
+    working_dir: /workspace/services/telemetry-service
+    command: go run ./cmd/telemetry
+    ports:
+      - "4317:4317"
+    volumes:
+      - .:/workspace
+
+  monitoring-ui:
+    image: node:24-alpine
+    container_name: monitoring-ui
+    env_file:
+      - .env
+    working_dir: /workspace/apps/monitoring-ui
+    command: sh -c "npm install && npm run dev -- --hostname 0.0.0.0 --port 3000"
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/workspace
+    depends_on:
+      - api-gateway
+
+  postgres-db:
+    image: pgvector/pgvector:pg18
+    container_name: postgres-db
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./infrastructure/postgres/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./infrastructure/postgres/seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
+
+  redis-cache:
+    image: redis:8-alpine
+    container_name: redis-cache
+    ports:
+      - "6379:6379"
+
+  n8n-workflows:
+    image: n8nio/n8n:latest
+    container_name: n8n-workflows
+    ports:
+      - "5678:5678"
+    environment:
+      N8N_HOST: localhost
+      N8N_PORT: 5678
+      WEBHOOK_URL: http://localhost:5678/
+    volumes:
+      - n8n-data:/home/node/.n8n
+      - ./automation/n8n:/workspace/automation/n8n:ro
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    volumes:
+      - ./infrastructure/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "${GRAFANA_PORT:-3001}:3000"
+    volumes:
+      - ./infrastructure/grafana/dashboards:/var/lib/grafana/dashboards:ro
+
+volumes:
+  postgres-data:
+  n8n-data:

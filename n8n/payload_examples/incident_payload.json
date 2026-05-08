@@ -1,0 +1,7 @@
+{
+  "machine_id": "PLC-001",
+  "error_code": "E-STOP",
+  "issue_summary": "Machine remains stopped after emergency stop reset.",
+  "ai_recommendation": "Inspect safety relay, E-stop loop, and PLC diagnostic buffer.",
+  "escalation_status": "pending"
+}

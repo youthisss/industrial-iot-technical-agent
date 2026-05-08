@@ -1,0 +1,8 @@
+{
+  "machine_id": "PLC-001",
+  "error_code": "E-STOP",
+  "issue_summary": "Issue unresolved after standard checks.",
+  "ai_recommendation": "Escalate to maintenance lead for safety circuit inspection.",
+  "escalation_status": "escalated",
+  "notify": ["maintenance_lead", "operations_manager"]
+}

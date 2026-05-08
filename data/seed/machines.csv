@@ -1,0 +1,3 @@
+machine_id,machine_name,location,plc_type
+PLC-001,Filling Line 1,Packaging Area,Siemens S7-1200
+PLC-002,Conveyor Line A,Assembly Area,Allen-Bradley CompactLogix

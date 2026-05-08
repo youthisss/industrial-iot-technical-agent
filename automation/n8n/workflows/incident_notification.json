@@ -1,0 +1,11 @@
+{
+  "name": "incident_notification",
+  "nodes": [
+    { "name": "Webhook", "type": "n8n-nodes-base.webhook", "position": [0, 0] },
+    { "name": "Validate Fields", "type": "n8n-nodes-base.function", "position": [220, 0] },
+    { "name": "Format Notification", "type": "n8n-nodes-base.function", "position": [440, 0] },
+    { "name": "Send Internal Notification", "type": "n8n-nodes-base.noOp", "position": [660, 0] },
+    { "name": "Return Delivery Status", "type": "n8n-nodes-base.respondToWebhook", "position": [880, 0] }
+  ],
+  "connections": {}
+}

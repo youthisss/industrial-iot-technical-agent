@@ -1,0 +1,7 @@
+{
+  "incident_id": "00000000-0000-0000-0000-000000000001",
+  "machine_id": "PACK-LINE-03",
+  "error_code": "OB82",
+  "priority": "medium",
+  "recommendation": "Inspect the I/O module, diagnostic buffer, and connected sensor wiring."
+}

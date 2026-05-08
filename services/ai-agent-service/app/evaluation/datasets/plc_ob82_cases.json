@@ -1,0 +1,9 @@
+[
+  {
+    "request_id": "req_001",
+    "machine_id": "PACK-LINE-03",
+    "plc_type": "Siemens S7-1200",
+    "error_code": "OB82",
+    "message": "Machine cannot start after I/O module fault indicator appears."
+  }
+]

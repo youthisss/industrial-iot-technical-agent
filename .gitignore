@@ -1,0 +1,79 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.local
+*.secret
+*.secrets
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Go
+.gocache/
+.gomodcache/
+bin/
+coverage.out
+*.test
+
+# Node and Next.js
+node_modules/
+**/node_modules/
+.next/
+**/.next/
+out/
+**/out/
+dist/
+**/dist/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local databases, generated data, and uploads
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+data/uploads/
+data/vector_store/
+data/generated/
+services/ai-agent-service/data/uploads/
+services/ai-agent-service/data/vector_store/
+
+# Runtime and tooling
+logs/
+*.log
+.DS_Store
+Thumbs.db
+tmp/
+temp/
+
+# Infrastructure local state
+grafana-storage/
+prometheus-data/
+postgres-data/
+redis-data/
+n8n-data/
+
+plan.md
+pyproject.toml
+requirements.txt
