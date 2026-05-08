@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+pydantic
+langchain
+langchain-core
+langgraph
+openai
+pinecone
+psycopg[binary]
+langsmith
+ragas
+pytest

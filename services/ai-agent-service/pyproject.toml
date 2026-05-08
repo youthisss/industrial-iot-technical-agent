@@ -1,0 +1,10 @@
+[project]
+name = "ai-agent-service"
+version = "0.1.0"
+description = "Boilerplate Python AI service for PLC troubleshooting."
+requires-python = ">=3.14"
+dependencies = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

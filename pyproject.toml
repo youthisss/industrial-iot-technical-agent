@@ -1,0 +1,13 @@
+[project]
+name = "plc-troubleshooting-agent"
+version = "0.1.0"
+description = "Portfolio boilerplate for a PLC troubleshooting AI agent with RAG, SQL memory, vision, and n8n automation."
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100

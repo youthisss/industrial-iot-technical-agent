@@ -2,6 +2,7 @@
 .env
 .env.*
 !.env.example
+!**/.env.example
 *.local
 *.secret
 *.secrets
@@ -73,7 +74,3 @@ prometheus-data/
 postgres-data/
 redis-data/
 n8n-data/
-
-plan.md
-pyproject.toml
-requirements.txt
