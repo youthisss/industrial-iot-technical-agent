@@ -1,64 +1,68 @@
-# PLC Troubleshooting Agent
+# Industrial IoT Technical Agent
 
-Enterprise-style boilerplate for PLC troubleshooting with a Python AI agent service, Go API gateway, PostgreSQL history, Redis cache, n8n WhatsApp escalation, a Next.js monitoring UI, and evaluation/telemetry scaffolding.
+This project is an enterprise-style AI troubleshooting platform for industrial PLC maintenance.  
+Its main purpose is to help technicians diagnose machine issues faster by combining technical document retrieval, historical maintenance context, and AI reasoning into one workflow.
 
-This repository follows `plan.md` as the final scope. The code is intentionally boilerplate-first: interfaces, contracts, service boundaries, and mock responses are present, but production integrations still need real credentials and implementation work.
+## What The Project Does
 
-## Final Architecture
+The platform accepts troubleshooting context such as machine ID, PLC type, error code, symptoms, and optional image evidence.  
+It then processes that context through an AI agent to produce structured troubleshooting guidance, incident recommendations, and escalation-ready outputs.
+
+At a high level, the system combines:
+
+- AI reasoning for diagnosis and recommendation generation.
+- RAG (retrieval-augmented generation) over technical documents.
+- Historical maintenance lookup from SQL data.
+- Workflow automation for operational notifications.
+- Monitoring surfaces for operators and supervisors.
+
+## System Components
+
+- **AI Agent Service (Python)**: Handles reasoning flow, retrieval, image-assisted analysis, and response generation.
+- **API Gateway (Go)**: Acts as the central API layer and coordinates calls between services.
+- **Telemetry Service (Go)**: Provides observability and metrics plumbing.
+- **Monitoring UI (Next.js)**: Presents incident, machine, and agent-run views for operational monitoring.
+- **PostgreSQL + Redis**: Store maintenance context and support fast repeated access patterns.
+- **n8n Automation**: Supports notification and escalation workflows.
+
+## Architecture Overview
 
 ```text
-Next.js Monitoring UI -> Go API Gateway -> Python AI Agent Service
-                                  |       -> PostgreSQL
-                                  |       -> Redis
-                                  |       -> n8n WhatsApp workflows
-                                  v
-                           Telemetry Service -> Prometheus / Grafana
-
-Python AI Agent Service -> LangGraph-style workflow
-                        -> Retriever interface
-                        -> Pinecone or pgvector adapter
-                        -> LangSmith / Ragas evaluation hooks
+Monitoring UI -> API Gateway -> AI Agent Service
+                        |      -> PostgreSQL
+                        |      -> Redis
+                        |      -> n8n workflows
+                        v
+                 Telemetry and monitoring stack
 ```
 
-## Plan-Aligned Areas
+## Setup
 
-- `services/ai-agent-service` contains the Role 1 Python AI service boilerplate.
-- `services/api-gateway` contains the Role 2 Go API gateway boilerplate.
-- `services/telemetry-service` contains telemetry service boilerplate.
-- `apps/monitoring-ui` contains the plan-scoped Next.js monitoring UI pages.
-- `automation/n8n` contains exactly the two planned workflow exports and payload examples.
-- `infrastructure` contains PostgreSQL, Redis, Prometheus, and Grafana starter assets.
-- `data` contains technical docs, sample image notes, and evaluation dataset placeholders.
-- `docs` contains architecture, API, AI-agent, database, evaluation, and n8n design notes.
+Prerequisites:
 
-## Local Setup
+- Docker Desktop with Docker Compose enabled
+
+Quick start:
 
 ```powershell
 Copy-Item .env.example .env
-docker compose up
+docker compose up --build
 ```
 
-Expected local endpoints:
+After startup, validate these endpoints:
 
-- AI agent service: `http://localhost:8000/health`
-- Go API gateway: `http://localhost:8080/health`
+- API gateway health: `http://localhost:8080/health`
+- AI agent health: `http://localhost:8000/health`
 - Monitoring UI: `http://localhost:3000/dashboard`
 - n8n: `http://localhost:5678`
 - Prometheus: `http://localhost:9090`
 - Grafana: `http://localhost:3001`
 
-## Final Demo Scenario
+Environment template:
 
-Use only this demo case:
+- Use [.env.example](/d:/portofolio/industrial-iot-technical-agent/.env.example) as the base for local `.env`.
 
-- Machine: `PACK-LINE-03`
-- PLC type: `Siemens S7-1200`
-- Error code: `OB82`
-- Symptom: `Machine cannot start after I/O module fault indicator appears.`
-- Image input: PLC panel or HMI screenshot showing the fault condition.
+## Scope Position
 
-## Scope Notes
-
-The final plan excludes authentication, predictive maintenance ML, SCADA integration, mobile apps, extra dashboards, extra notification channels, and any vector database beyond Pinecone and pgvector.
-
-Legacy files from the earlier scaffold may still exist in this workspace because the folder is not currently a Git repository. The plan-aligned boilerplate lives in the directories listed above.
+This repository is intentionally built as a structured portfolio-grade boilerplate.  
+It focuses on correctness of architecture, service boundaries, and integration flow, while advanced production concerns and expanded product features remain outside this phase scope.
