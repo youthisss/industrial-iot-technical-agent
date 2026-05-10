@@ -59,6 +59,8 @@ data/vector_store/
 data/generated/
 services/ai-agent-service/data/uploads/
 services/ai-agent-service/data/vector_store/
+role-1/services/ai-agent-service/data/uploads/
+role-1/services/ai-agent-service/data/vector_store/
 
 # Runtime and tooling
 logs/

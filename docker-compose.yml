@@ -4,7 +4,7 @@ services:
     container_name: ai-agent-service
     env_file:
       - .env
-    working_dir: /workspace/services/ai-agent-service
+    working_dir: /workspace/role-1/services/ai-agent-service
     command: sh -c "pip install -r requirements.txt && uvicorn app.main:app --host 0.0.0.0 --port 8000"
     ports:
       - "8000:8000"
@@ -18,7 +18,7 @@ services:
     container_name: api-gateway
     env_file:
       - .env
-    working_dir: /workspace/services/api-gateway
+    working_dir: /workspace/role-2/services/api-gateway
     command: go run ./cmd/api
     ports:
       - "8080:8080"
@@ -34,7 +34,7 @@ services:
     container_name: telemetry-service
     env_file:
       - .env
-    working_dir: /workspace/services/telemetry-service
+    working_dir: /workspace/role-2/services/telemetry-service
     command: go run ./cmd/telemetry
     ports:
       - "4317:4317"
@@ -46,7 +46,7 @@ services:
     container_name: monitoring-ui
     env_file:
       - .env
-    working_dir: /workspace/apps/monitoring-ui
+    working_dir: /workspace/role-2/apps/monitoring-ui
     command: sh -c "npm install && npm run dev -- --hostname 0.0.0.0 --port 3000"
     ports:
       - "3000:3000"
@@ -64,8 +64,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
-      - ./infrastructure/postgres/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
-      - ./infrastructure/postgres/seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
+      - ./role-2/infrastructure/postgres/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./role-2/infrastructure/postgres/seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
 
   redis-cache:
     image: redis:8-alpine
@@ -84,7 +84,7 @@ services:
       WEBHOOK_URL: http://localhost:5678/
     volumes:
       - n8n-data:/home/node/.n8n
-      - ./automation/n8n:/workspace/automation/n8n:ro
+      - ./role-2/automation/n8n:/workspace/automation/n8n:ro
 
   prometheus:
     image: prom/prometheus:latest
@@ -92,7 +92,7 @@ services:
     ports:
       - "${PROMETHEUS_PORT:-9090}:9090"
     volumes:
-      - ./infrastructure/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./role-2/infrastructure/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
 
   grafana:
     image: grafana/grafana:latest
@@ -100,7 +100,7 @@ services:
     ports:
       - "${GRAFANA_PORT:-3001}:3000"
     volumes:
-      - ./infrastructure/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - ./role-2/infrastructure/grafana/dashboards:/var/lib/grafana/dashboards:ro
 
 volumes:
   postgres-data:

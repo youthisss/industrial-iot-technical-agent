@@ -8,4 +8,4 @@ PostgreSQL owns exactly five tables:
 - `agent_runs`
 - `notification_logs`
 
-The canonical boilerplate SQL lives in `infrastructure/postgres/schema.sql`.
+The canonical boilerplate SQL lives in `role-2/infrastructure/postgres/schema.sql`.

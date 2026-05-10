@@ -1,6 +1,6 @@
 # n8n Workflows
 
-The final scope allows only two workflows under `automation/n8n/workflows`.
+The final scope allows only two workflows under `role-2/automation/n8n/workflows`.
 
 ## incident_notification
 

@@ -21,7 +21,7 @@ python ingestion/ingest_documents.py
 3. Start Streamlit:
 
 ```bash
-streamlit run frontend/streamlit_app.py
+streamlit run role-1/legacy/frontend/streamlit_app.py
 ```
 
 ## Walkthrough
